@@ -1,7 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# This import SQL was make thought this link
+# https://gist.github.com/seyhunak/7843549
+# Thank you @seyhunak
+
+unless Rails.env.production?
+  connection = ActiveRecord::Base.connection
+  connection.tables.each do |table|
+    connection.execute("TRUNCATE #{table}") unless table == "schema_migrations"
+  end
+
+  sql = File.read('db/import.sql')
+  statements = sql.split(/;$/)
+  statements.pop
+
+  ActiveRecord::Base.transaction do
+    statements.each do |statement|
+      connection.execute(statement)
+      puts 'SQL has been imported with successfull!'
+    end
+  end
+end
+
