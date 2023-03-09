@@ -1,3 +1,3 @@
 class Address < ApplicationRecord
-  has_one people;
+  belongs_to :people
 end
