@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['host'] %>
+  username: <%= ENV['username'] %>
+
+development:
+  <<: *default
+  database: om30_project_development
+  password: <%= ENV['password'] %>
+
+test:
+  <<: *default
+  database: om30_project_test
+  password: <%= ENV['password'] %>
+
+production:
+  <<: *default
+  database: om30_project_production
+  username: <%= ENV['om30_project_database'] %>
+  password: <%= ENV["OM30_PROJECT_DATABASE_PASSWORD"] %>
