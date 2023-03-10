@@ -1,0 +1,52 @@
+name: ruby-test-OM30
+
+on:
+  push:
+    branches: "*"
+  pull_request:
+    branches: "*"
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: aleatoriop@ssword
+      DATABASE_HOST: localhost
+      DATABASE_URL: postgresql://postgres:postgres@localhost/om30_project_test
+
+    services:
+      db:
+        image: postgres
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_DB: om30_project_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: aleatoriop@ssword
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1.3"
+
+      - name: Run Install
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          gem update --system
+          gem install rake -v 13.0.1
+          gem install bundler -v "~>2.0"
+          bundle install
+          rails assets:precompile
+      - name: Run Tests (rspec)
+        run: |
+          bundle exec rails db:create db:migrate db:seed
+          bundle exec rspec
