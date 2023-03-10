@@ -5,32 +5,32 @@ ruby "3.1.3"
 
 gem "bootsnap", require: false
 
-gem "figaro", "1.2"
+gem "figaro"
 
 gem "importmap-rails"
 
-gem "jbuilder", '2.11.5'
+gem "jbuilder"
 
-gem "pg", "1.1"
-gem "puma", "5.0"
-gem "pagy", "6.0"
+gem "pg"
+gem "puma"
+gem "pagy"
 
-gem "rails", "7.0.4.2"
-gem 'redis', '5.0'
+gem "rails"
+gem 'redis'
 
-gem "sprockets-rails", '3.4.2'
-gem "stimulus-rails", '1.2.1'
+gem "sprockets-rails"
+gem "stimulus-rails"
 
-gem "tailwindcss-rails", '2.0.24'
-gem "turbo-rails", '1.4.0'
+gem "tailwindcss-rails"
+gem "turbo-rails"
 
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem "rspec-rails", "6.0"
-  gem "simplecov", "0.22.0"
-  gem 'shoulda-matchers', '5.0'
+  gem "rspec-rails"
+  gem "simplecov"
+  gem 'shoulda-matchers'
 end
 
 group :development do
