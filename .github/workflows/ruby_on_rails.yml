@@ -47,8 +47,8 @@ jobs:
       - name: Install dependencies
         run: |
           bundle install
-          bundle db:seed
-          bundle db:migrate
+          bundle exec rails db:seed
+          bundle exec rails db:migrate
 
 
       - name: Install Node.js
