@@ -45,9 +45,9 @@ jobs:
           gem install rake -v 13.0.1
           gem install bundler -v "2.4.8"
           bundle install
-          bundle update
+          bundle update --bundler 
           rails assets:precompile
       - name: Run Tests (rspec)
         run: |
-          bundle exec rails db:create db:migrate
+          bundle exec rails db:create db:seed db:migrate
           bundle exec rspec
