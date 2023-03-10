@@ -52,7 +52,6 @@ jobs:
 
       - name: Run Install
         run: |
-          sudo apt-get -yqq install libpq-dev
           gem update --system
           gem install rake -v 13.0.1
           gem install bundler -v "2.4.8"
@@ -61,7 +60,7 @@ jobs:
           bundle exec rails db:seed
           bundle exec rails db:migrate
           rails assets:precompile
-          
+
       - name: Create DB
         run: bundle exec rails db:reset
 
