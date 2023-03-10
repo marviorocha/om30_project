@@ -14,17 +14,13 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./pgconf:/docker-entrypoint-initdb.d/
 
-
-#  redis:
-#    image: redis
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    volumes:
-#      - redis-data:/data
-
-
-
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
 
 volumes:
   postgres-data:

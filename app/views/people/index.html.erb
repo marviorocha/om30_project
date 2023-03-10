@@ -1,0 +1,44 @@
+<% content_for :title do %>
+  Página Inicial - AO30
+<% end %>
+<div class="flex items-center">
+  <div class="flex-1">
+    <h1 class="text-3xl mt-6">
+      Municipes </h1>
+  </div>
+
+</div>
+
+<section class="text-gray-600 body-font">
+  <div class="container py-10 px-2 mx-auto">
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <% @people.each do |people| %>
+        <div class="card  bg-base-100 shadow-xl">
+          <figure><img src="http://lorempixel.com.br/1500/1500" alt="Movie"/></figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= people.full_name %></h2>
+
+            <p class="text-sm">
+              <b>Data de Nascimento:</b> <%= people.date_of_birth.strftime('%d/%m/%Y') %></br>
+              <b>Email:</b> <span><%= people.email %></span></br>
+              <b>CNS:</b> <span><%= people.cns %></span></br>
+            </p>
+
+            <div class="card-actions justify-end">
+              <button class="btn btn-primary">+ Detalhes</button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+
+    </div>
+
+    <div class="text-center py-4  mx-auto">
+      123456
+    </div>
+
+</section>
