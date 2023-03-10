@@ -48,10 +48,6 @@ jobs:
       - name: Install Yarn packages
         run: yarn install --pure-lockfile
 
-      - name: Create migration database
-        run: |
-          bundle exec rails db:seed
-          bundle exec rails db:migrate
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -65,8 +61,10 @@ jobs:
           gem update --system
           gem install rake -v 13.0.1
           gem install bundler -v "2.4.8"
+          bundle update --bundler
           bundle install
-          bundle update --bundler 
+          bundle exec rails db:seed
+          bundle exec rails db:migrate
           rails assets:precompile
 
 
