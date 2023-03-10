@@ -62,7 +62,7 @@ jobs:
  
 
       - name: Create DB
-        run: bundle exec rails db:seed db:create
+        run: bundle rails db:seed db:migrate
 
 
       - name: Run Tests (rspec)
