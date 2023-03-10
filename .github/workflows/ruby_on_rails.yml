@@ -1,92 +1,69 @@
 name: ruby-test-OM30
+  on: push
+    jobs:
+      rubocop:
+        name: Rubocop
+        runs-on: ubuntu-20.04
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v1
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+          - name: Setup Ruby
+            uses: ruby/setup-ruby@v1
+            with:
+              bundler-cache: true
 
-jobs:
-  linter:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+          - name: Analyze code
+            run: bundle exec rubocop
 
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1.3
-          bundler-cache: true
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-
-      - name: Install Yarn
-        run: |
-          npm install yarn
-          yarn --version
-          yarn install
-      - name: Prepare environment
-        run: |
-          bundle exec overcommit --sign
-          bundle exec overcommit --sign pre-commit
-      - name: Run all checks
-        run: SKIP=AuthorName,AuthorEmail bundle exec overcommit --run
-
-  rspec:
-    runs-on: ubuntu-latest
-    env:
-      RAILS_ENV: test
-      POSTGRES_HOST: localhost
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: aleatorio123
-      POSTGRES_DB: om30_project_test
-    services:
-      postgres:
-        image: postgres:latest
+      rspec:
+        name: RSpec
+        needs: rubocop
+        runs-on: ubuntu-20.04
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: baseapp_test
-        ports:
-          - 5432:5432
-        options:
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --entrypoint redis-server
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/om30_project_test
+        services:
+          postgres:
+            image: postgres:latest
+            ports: [ '5432:5432' ]
+            env:
+              POSTGRES_DB: om30_project_test
+              POSTGRES_USER: postgres
+              POSTGRES_PASSWORD: aleatoriamente123
+            options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v1
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+          - name: Setup Ruby
+            uses: ruby/setup-ruby@v1
+            with:
+              bundler-cache: true
 
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1.3
-          bundler-cache: true
+          - name: Install postgres client dependencies
+            run: sudo apt-get install libpq-dev
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+          - name: Setup Node
+            uses: actions/setup-node@v1
+            with:
+              node-version: 16.0.x
 
-      - name: Install Yarn
-        run: |
-          npm install yarn
-          yarn --version
-          yarn install
-      - name: Create DB
-        run: bundle exec rails db:reset
+          - name: Yarn package cache
+            uses: actions/cache@v2
+            with:
+              path: ./node_modules
+              key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
 
-      - name: Run tests
-        run: bundle exec rspec
-        
+          - name: Install Yarn packages
+            run: yarn install --pure-lockfile
+
+          - name: Create database
+            run: |
+              bundle exec rails db:create
+              bundle exec rails db:schema:load
+              bundle exec rails db:structure:load
+              bundle exec rails db:migrate
+
+          - name: Run tests
+            run: bundle exec rspec spec
