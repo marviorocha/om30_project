@@ -7,48 +7,17 @@ on:
     branches: [main]
 
 jobs:
-  pipeline:
+  linter:
     runs-on: ubuntu-latest
-    env:
-      RAILS_ENV: test
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: aleatorio123
-      DATABASE_HOST: localhost
-      DATABASE_URL: postgresql://postgres:aleatorio123@localhost/om30_project_test
-
-    services:
-      db:
-        image: postgres
-        ports: [ "5432:5432" ]
-        env:
-          POSTGRES_DB: om30_project_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: aleatorio123
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --entrypoint redis-server
-
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-
-      - name: Run Install
-        run: |
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
           ruby-version: 3.1.3
           bundler-cache: true
-
-          bundle install
-          bundle update --bundler
-
-          rails assets:precompile
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -60,14 +29,64 @@ jobs:
           npm install yarn
           yarn --version
           yarn install
+      - name: Prepare environment
+        run: |
+          bundle exec overcommit --sign
+          bundle exec overcommit --sign pre-commit
+      - name: Run all checks
+        run: SKIP=AuthorName,AuthorEmail bundle exec overcommit --run
 
+  rspec:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: aleatorio123
+      POSTGRES_DB: om30_project_test
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: baseapp_test
+        ports:
+          - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.3
+          bundler-cache: true
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install Yarn
+        run: |
+          npm install yarn
+          yarn --version
+          yarn install
       - name: Create DB
-        run: |
-          bundle exec rails db:reset
-          bundle rails db:seed
-          bundle rails db:migrate
+        run: bundle exec rails db:reset
 
+      - name: Run tests
+        run: bundle exec rspec
         
-      - name: Run Tests (rspec)
-        run: |
-          bundle exec rspec
