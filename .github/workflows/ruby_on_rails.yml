@@ -46,8 +46,7 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
-      - name: Run tests
-        run: bundle exec rake
+
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -68,4 +67,5 @@ jobs:
 
       - name: Run Tests (rspec)
         run: |
+          bundle db:seed db:migrate
           bundle exec rspec
