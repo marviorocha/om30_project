@@ -1,7 +1,9 @@
 # OM30 Project Ruby On Rails
 
+[![ruby-test-OM30](https://github.com/marviorocha/om30_project/actions/workflows/ruby_on_rails.yml/badge.svg)](https://github.com/marviorocha/om30_project/actions/workflows/ruby_on_rails.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9ea072453dc9443e808b1288038593aa)](https://www.codacy.com/gh/marviorocha/om30_project/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=marviorocha/om30_project&amp;utm_campaign=Badge_Grade)
 ## Introduction
-Hello, welcome my github! My name is Marvio, I love code development and this is a 
+Hello, welcome my github! My name is Marvio, I love code develop and this is a 
 challenge for a offer in company **OM30** Where put all details for this project in below:
 
 ## Requiriments
