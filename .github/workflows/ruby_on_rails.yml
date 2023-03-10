@@ -45,7 +45,10 @@ jobs:
           ruby-version: '3.0.1'
 
       - name: Install dependencies
-        run: bundle install
+        run: |
+          bundle install
+          bundle db:seed
+          bundle db:migrate
 
 
       - name: Install Node.js
@@ -58,12 +61,7 @@ jobs:
           npm install yarn
           yarn --version
           yarn install
-
  
-
-      - name: Create DB
-        run: bundle exec bin/rails db:seed db:migrate
-
 
       - name: Run Tests (rspec)
         run: |
