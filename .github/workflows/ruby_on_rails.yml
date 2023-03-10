@@ -50,8 +50,8 @@ jobs:
 
       - name: Create migration database
         run: |
-          bundle exec bin/rails db:seed
-          bundle exec bin/rails db:migrate
+          bundle exec rails db:seed
+          bundle exec rails db:migrate
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -68,6 +68,7 @@ jobs:
           bundle install
           bundle update --bundler 
           rails assets:precompile
+
 
       - name: Run Tests (rspec)
         run: |
