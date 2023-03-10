@@ -12,9 +12,9 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_USER: postgres
-      DATABASE_PASSWORD: aleatoriop@ssword
+      DATABASE_PASSWORD: aleatorio123
       DATABASE_HOST: localhost
-      DATABASE_URL: postgresql://postgres:aleatoriop@ssword@localhost/om30_project_test
+      DATABASE_URL: postgresql://postgres:aleatorio123@localhost/om30_project_test
 
     services:
       db:
@@ -23,7 +23,7 @@ jobs:
         env:
           POSTGRES_DB: om30_project_test
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: aleatoriop@ssword
+          POSTGRES_PASSWORD: aleatorio123
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
