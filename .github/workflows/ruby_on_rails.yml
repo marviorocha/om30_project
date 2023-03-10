@@ -47,6 +47,7 @@ jobs:
           bundle install
           bundle update --bundler 
           rails assets:precompile
+          rails db:seed db:migrate
       - name: Run Tests (rspec)
         run: |
           bundle exec rails db:seed db:migrate
