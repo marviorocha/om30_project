@@ -1,69 +1,52 @@
-name: ruby-test-OM30
-  on: push
-    jobs:
-      rubocop:
-        name: Rubocop
-        runs-on: ubuntu-20.04
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v1
-
-          - name: Setup Ruby
-            uses: ruby/setup-ruby@v1
-            with:
-              bundler-cache: true
-
-          - name: Analyze code
-            run: bundle exec rubocop
-
-      rspec:
-        name: RSpec
-        needs: rubocop
-        runs-on: ubuntu-20.04
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - "5432:5432"
         env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/om30_project_test
-        services:
-          postgres:
-            image: postgres:latest
-            ports: [ '5432:5432' ]
-            env:
-              POSTGRES_DB: om30_project_test
-              POSTGRES_USER: postgres
-              POSTGRES_PASSWORD: aleatoriamente123
-            options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v1
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-          - name: Setup Ruby
-            uses: ruby/setup-ruby@v1
-            with:
-              bundler-cache: true
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          bundler-cache: true
 
-          - name: Install postgres client dependencies
-            run: sudo apt-get install libpq-dev
+      - name: Set up database schema
+        run: bin/rails db:schema:load
 
-          - name: Setup Node
-            uses: actions/setup-node@v1
-            with:
-              node-version: 16.0.x
+      - name: Run tests
+        run: bin/rake
 
-          - name: Yarn package cache
-            uses: actions/cache@v2
-            with:
-              path: ./node_modules
-              key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+        with:
+          bundler-cache: true
 
-          - name: Install Yarn packages
-            run: yarn install --pure-lockfile
-
-          - name: Create database
-            run: |
-              bundle exec rails db:create
-              bundle exec rails db:schema:load
-              bundle exec rails db:structure:load
-              bundle exec rails db:migrate
-
-          - name: Run tests
-            run: bundle exec rspec spec
+      - name: Security audit dependencies
+        run: bundle exec bundle audit --update
+      - name: Security audit application code
+        run: bundle exec brakeman -q -w2
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
