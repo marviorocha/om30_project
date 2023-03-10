@@ -49,5 +49,5 @@ jobs:
           rails assets:precompile
       - name: Run Tests (rspec)
         run: |
-          bundle exec rails db:create db:seed db:migrate
+          bundle exec rails db:seed db:migrate
           bundle exec rspec
