@@ -32,10 +32,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        using: 'node16'
+        main: 'main.js'
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.14.0
+
+      - name: Yarn package cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('./yarn.lock') }}
+
+      - name: Install Yarn packages
+        run: yarn install --pure-lockfile
+
+      - name: Create database
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:seed
+          bundle exec rails db:migrate
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
+          bundler-cache: true
           ruby-version: "3.1.3"
 
       - name: Run Install
@@ -47,8 +70,7 @@ jobs:
           bundle install
           bundle update --bundler 
           rails assets:precompile
-          rails db:seed db:migrate
+
       - name: Run Tests (rspec)
         run: |
-          bundle exec rails db:seed db:migrate
           bundle exec rspec
