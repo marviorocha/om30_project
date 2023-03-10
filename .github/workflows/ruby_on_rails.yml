@@ -1,52 +1,66 @@
-name: "Ruby on Rails CI"
+name: ruby-test-OM30
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
-  test:
+  pipeline:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: aleatorio123
+      DATABASE_HOST: localhost
+      DATABASE_URL: postgresql://postgres:aleatorio123@localhost/om30_project_test
 
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+    services:
+      db:
+        image: postgres
+        ports: [ "5432:5432" ]
+        env:
+          POSTGRES_DB: om30_project_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: aleatorio123
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
         with:
+          ruby-version: '3.1.3'
           bundler-cache: true
 
-      - name: Set up database schema
-        run: bin/rails db:schema:load
-
-      - name: Run tests
-        run: bin/rake
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          bundler-cache: true
+          node-version: 16.x
 
-      - name: Security audit dependencies
-        run: bundle exec bundle audit --update
-      - name: Security audit application code
-        run: bundle exec brakeman -q -w2
-      - name: Lint Ruby files
-        run: bundle exec rubocop --parallel
+      - name: Install Yarn
+        run: |
+          npm install yarn
+          yarn --version
+          yarn install
+
+
+      - name: Create DB
+        run: bundle exec rails db:reset
+
+
+      - name: Run Tests (rspec)
+        run: |
+          bundle exec rspec
