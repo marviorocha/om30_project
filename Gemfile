@@ -6,6 +6,7 @@ ruby "3.0.1"
 gem "bootsnap", require: false
 
 gem "figaro", "1.2"
+gem "faker", "3.1"
 
 gem "importmap-rails"
 
@@ -30,12 +31,14 @@ group :development, :test do
   gem "rspec-rails", "6.0"
   gem "simplecov", "0.22.0"
   gem "shoulda-matchers", "5.3"
+  gem 'byebug'
 
 end
 
 group :development do
   gem "web-console"
 end
+
 
 
 
