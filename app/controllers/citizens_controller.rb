@@ -6,15 +6,21 @@ class CitizensController < ApplicationController
   end
 
   def new
-
+    @citizen = Citizen.new
   end
   def create
     @citizen = Citizen.new(citizen_params)
-    if @citizens.save
-      redirect_to turbo_stream_from(citizen_params(@citizens))
+
+    if @citizen.save
+        # render turbo_stream.update("add_citizen", partial: "citizens/new", locals: { person: @citizen })
+        format.html { redirect_to @citizen, notice: "Person was successfully created." }
     else
-      render turbo_stream: turbo_stream.replace(:add_people, partial: 'citizens/form', locals: { citizen: @citizen})
+
+        render turbo_stream.replace("add_citizen", partial: "citizens/form", locals: { person: @person })
+        format.html { render :new, status: :unprocessable_entity }
     end
+
+
   end
 
   private
@@ -25,7 +31,7 @@ class CitizensController < ApplicationController
 
   def citizen_params
 
-    params.require(:citizens).permit(:full_name,
+    params.require(:citizen).permit(:full_name,
                                      :email,
                                      :cpf,
                                      :cns,

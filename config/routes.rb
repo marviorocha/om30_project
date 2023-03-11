@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-    root to: 'people#index'
+    root to: 'citizens#index'
 
-    resources :people, path: 'municipes', only: %i[index update new show create]
+    resources :citizens, path: 'municipe', only: %i[index new create], defaults: { format: :turbo_stream }
 
 
 end

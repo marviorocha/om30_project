@@ -1,12 +1,46 @@
-<%= form_with model: citizen do |f| %>
 
-  <%= f.text_field :full_name %>
-  <%= f.text_field :email %>
-  <%= f.text_field :cpf %>
-  <%= f.text_field :cns %>
-  <%= f.text_field :date_of_birth %>
-  <%= f.text_field :phone %>
-  <%= f.text_field :status %>
 
-<% end %>
+
+    <diV class="form-control w-full max-w-xs">
+      <%= form_with model: citizen, local: true, id: 'add_citizen' do |f| %>
+
+        <div class="py-2">
+          <%= f.text_field :full_name, placeholder: 'Nome completo', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.text_field :email, placeholder: 'Digite seu e-mail', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.text_field :cpf, placeholder: 'Digite seu CPF', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.text_field :cns, placeholder: 'Número do CNS', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.text_field :date_of_birth, placeholder: 'Data de Nascimento ex dd/mm/YYYY', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.text_field :phone, placeholder: 'Telefone com DDD', class: 'input input-bordered w-full max-w-xs' %>
+        </div>
+
+        <div class="py-2">
+          <%= f.select(:status, [['Ativo', 1], ['inativo', 2], ], {}, {class: "select select-info w-full max-w-xs"}) %>
+        </div>
+
+        <div class="py-2">
+          <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
+        </div>
+
+
+      <% end %>
+
+
+
+
+
 
