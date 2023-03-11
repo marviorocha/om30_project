@@ -47,10 +47,9 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get -yqq install libpq-dev
-          bundle install
- 
-
-          
+          bundle install 
+          bundle exec rails db:migrate
+          bundle exec rails db:seed
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -66,7 +65,4 @@ jobs:
 
       - name: Run Tests (rspec)
         run: |
-          bundle exec rails db:create
-          bundle exec rails db:seed
-          bundle exec rails db:migrate
           bundle exec rspec
