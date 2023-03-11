@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe People, type: :model do
+RSpec.describe Citizen, type: :model do
   describe 'Validations' do
     context 'Check field is presence' do
       # it { should validate_presence_of(:title) }

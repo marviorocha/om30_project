@@ -1,4 +1,4 @@
-class People < ApplicationRecord
+class Citizen < ApplicationRecord
 
   has_one :address
 

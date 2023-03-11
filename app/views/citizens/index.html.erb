@@ -1,0 +1,59 @@
+<% content_for :title do %>
+  Página Inicial - AO30
+<% end %>
+
+<div class="flex flex-row">
+  <div class="flex-1">
+    <h1 class="text-3xl">Municipes </h1>
+  </div>
+  <div class="flex-2">
+
+    <a href="<%= new_citizen_path %>" for="my-modal-3" class="btn gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/>
+      </svg>
+      Novo Municipe
+    </a>
+
+  </div>
+
+
+</div>
+
+<section class="text-gray-600 body-font">
+  <div class="container py-10 px-2 mx-auto">
+
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <% @citizens.each do |citizen| %>
+        <div class="card  bg-base-100 shadow-xl">
+          <figure><img src="http://lorempixel.com.br/1500/1500" alt="Movie"/></figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= citizen.full_name %></h2>
+
+            <p class="text-sm">
+              <b>Data de Nascimento:</b> <%= citizen.date_of_birth.strftime('%d/%m/%Y') %></br>
+              <b>Email:</b> <span><%= citizen.email %></span></br>
+              <b>CNS:</b> <span><%= citizen.cns %></span></br>
+            </p>
+
+            <div class="card-actions justify-end">
+              <button class="btn btn-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                Detalhes
+              </button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+
+    </div>
+
+
+</section>
+
+<%= render 'form', citizen: @citizen %>
