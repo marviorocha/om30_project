@@ -15,8 +15,9 @@ unless Rails.env.production?
   ActiveRecord::Base.transaction do
     statements.each do |statement|
       connection.execute(statement)
-      puts 'SQL has been imported with successfull!'
     end
+    puts 'SQL was imported with successful!'
   end
+
 end
 

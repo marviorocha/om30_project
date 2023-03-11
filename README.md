@@ -8,8 +8,10 @@ challenge for a offer in company **OM30** Where put all details for this project
 
 ## Requiriments
 
- - Ruby 2.7 +
- - Rails 7
+ - Ruby 3.0.1
+ - Rails 7.0.4.2
+ - Redis 5.0
+ - Docker
 
 ## How to deploy
 
