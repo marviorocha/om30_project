@@ -1,12 +1,12 @@
 
 CREATE TABLE citizens (
     id SERIAL PRIMARY KEY NOT NULL,
-    full_name VARCHAR,
+    full_name VARCHAR NOT NULL,
     email VARCHAR NOT NULL,
     cpf VARCHAR(14) UNIQUE NOT NULL,
     cns VARCHAR(15) NOT NULL,
-    date_of_birth DATE,
-    phone VARCHAR,
+    date_of_birth DATE NOT NULL,
+    phone VARCHAR NOT NULL,
     status BOOLEAN NOT NULL,
     created_at TIMESTAMP(6) NOT NULL,
     updated_at TIMESTAMP(6) NOT NULL
@@ -14,9 +14,9 @@ CREATE TABLE citizens (
 
 CREATE TABLE addresses (
     id SERIAL PRIMARY KEY NOT NULL,
-    cep VARCHAR,
+    cep VARCHAR NOT NULL,
     logadouro VARCHAR NOT NULL,
-    district VARCHAR UNIQUE NOT NULL,
+    district VARCHAR NOT NULL,
     city VARCHAR NOT NULL,
     uf VARCHAR,
     ibge_code BIGINT,
@@ -39,6 +39,10 @@ INSERT INTO citizens (full_name, email, cpf, cns, date_of_birth, phone, status, 
 
 -- INSERT Address:
 INSERT INTO addresses (cep, logadouro, district, city, uf, ibge_code, citizen_id, created_at, updated_at) VALUES
-       ('279101212', 'Rua Manuel Leopardo dos Eucalyptus','Centro', 'Macaé', 'RJ', '1354562456815467', 1, '2023-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z');
+       ('279101212', 'Rua Manuel Leopardo dos Eucalyptus','Centro', 'Macaé', 'RJ', '1354562456815467', 1, '2023-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z'),
+       ('279854545', 'Rua Santos Domond Andrad','Centro', 'Belford Roxo', 'RJ', '465456541122', 2, '2000-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z'),
+       ('958897887', 'Rua Ferreira Viana','Pereira', 'Santos', 'SP', '456545654', 3, '2000-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z'),
+       ('898754547', 'Av. Pereira Junior','Nova Aurora', 'Cabo Frio', 'RJ', '56545654', 4, '2000-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z'),
+       ('987871126', 'Rua Padrinho Jão Vinte','Benedito', 'Anápolis', 'GO', '456545654', 5, '2000-01-03T01:38:02.395Z', '2023-01-03T01:38:02.395Z');
 
 ;

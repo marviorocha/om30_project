@@ -1,37 +1,45 @@
 
 
 
-    <diV class="form-control w-full max-w-xs">
+    <diV class="form-control w-full max-w-xs py-16">
       <%= form_with model: citizen, local: true, id: 'add_citizen' do |f| %>
 
         <div class="py-2">
+          <%= f.label :full_name, 'Nome completo:' %>
           <%= f.text_field :full_name, placeholder: 'Nome completo', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
+          <%= f.label :email, 'E-mail:' %>
           <%= f.text_field :email, placeholder: 'Digite seu e-mail', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
+          <%= f.label :cpf, 'CPF:' %>
           <%= f.text_field :cpf, placeholder: 'Digite seu CPF', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
+          <%= f.label :cns, 'Número do CNS:' %>
           <%= f.text_field :cns, placeholder: 'Número do CNS', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
-          <%= f.text_field :date_of_birth, placeholder: 'Data de Nascimento ex dd/mm/YYYY', class: 'input input-bordered w-full max-w-xs' %>
+          <%= f.label :date_of_birth, 'Data de nascimento:' %>
+          <%= f.text_field :date_of_birth, placeholder: 'Ex.: dia/mês/ano', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
-          <%= f.text_field :phone, placeholder: 'Telefone com DDD', class: 'input input-bordered w-full max-w-xs' %>
+          <%= f.label :phone, 'Telefone com DDD:' %>
+          <%= f.text_field :phone, placeholder: '(00) 00000-00000', class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
-          <%= f.select(:status, [['Ativo', 1], ['inativo', 2], ], {}, {class: "select select-info w-full max-w-xs"}) %>
+          <%= f.select(:status, [['ATIVO', 1], ['INATIVO', 2], ], {}, {class: "select select-info w-full max-w-xs"}) %>
         </div>
-
+        <div class="py-2">
+          <%= f.file_field :picture %>
+        </div>
         <div class="py-2">
           <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
         </div>

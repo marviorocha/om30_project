@@ -3,6 +3,7 @@ class CitizensController < ApplicationController
   before_action :set_citizen, only: %i[update]
   def index
     @citizens = Citizen.all
+
   end
 
   def new
@@ -37,6 +38,7 @@ class CitizensController < ApplicationController
                                      :cns,
                                      :date_of_birth,
                                      :phone,
+                                     :picture,
                                      :status )
   end
 
