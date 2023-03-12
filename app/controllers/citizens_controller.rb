@@ -13,10 +13,9 @@ class CitizensController < ApplicationController
     @citizen = Citizen.new(citizen_params)
 
     if @citizen.save
-        # render turbo_stream.update("add_citizen", partial: "citizens/new", locals: { person: @citizen })
-        format.html { redirect_to @citizen, notice: "Person was successfully created." }
+        render turbo_stream.update("add_citizen", partial: "citizens/new", locals: { person: @citizen })
+        format.html { redirect_to @citizen, notice: "Cidadão foi criado com sucesso!" }
     else
-
         render turbo_stream.replace("add_citizen", partial: "citizens/form", locals: { person: @person })
         format.html { render :new, status: :unprocessable_entity }
     end

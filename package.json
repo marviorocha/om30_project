@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "daisyui": "^2.51.3"
-  }
+    "@hotwired/turbo-rails": "^7.3.0",
+    "daisyui": "^2.51.3",
+    "stimulus-content-loader": "^4.1.0"
+  },
+  "devDependencies": {}
 }
