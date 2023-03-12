@@ -1,9 +1,18 @@
 class CitizensController < ApplicationController
 
-  before_action :set_citizen, only: %i[update]
+  before_action :set_citizen, only: %i[address]
   def index
-    @citizens = Citizen.all
 
+  end
+
+  def cards
+    @citizens = Citizen.all
+    render partial: 'citizens/cards', locals: {citizen: @citizens}
+  end
+
+  def address
+     @address = @citizen.address
+     render json: @address
   end
 
   def new
