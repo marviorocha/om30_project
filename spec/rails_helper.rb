@@ -15,6 +15,7 @@ end
 RSpec.configure do |config|
 
   SimpleCov.start
+  config.include FactoryBot::Syntax::Methods
 
   Shoulda::Matchers.configure do |config|
     config.integrate do |with|

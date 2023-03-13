@@ -10,7 +10,7 @@
           <% if citizen.picture.attached? %>
             <%= image_tag citizen.picture %>
           <% else %>
-            <%= image_tag 'https://placebeard.it/640x360' %>
+            <%= image_tag 'no-picture.svg' %>
           <% end %>
         </figure>
 
@@ -35,13 +35,14 @@
             </label>
           </div>
 
-          <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-          <div   class="modal">
+          <input type="checkbox" id="my-modal-3" class="modal-toggle"/>
+          <div class="modal">
             <div class="modal-box relative">
               <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
               <h3 class="text-lg font-bold"> Endereço: </h3>
-              <br class="py-4 font-bold "> CEP: <span data-target="show-address.zip"></span> </br>
-              <br class="py-4 font-bold"> Endereço: <span data-target="show-address.address"></span> </br>
+              <br class="py-4 font-bold "> CEP: <span data-target="show-address.zipcode"></span> </br>
+              <br class="py-4 font-bold"> Logradouro: <span data-target="show-address.street"></span> </br>
+              <br class="py-4 font-bold"> Complemento: <span data-target="show-address.complement"></span> </br>
               <br class="py-4 font-bold"> Bairro: <span data-target="show-address.district"></span> </br>
               <br class="py-4 font-bold"> Cidade: <span data-target="show-address.city"></span> </br>
               <br class="py-4 font-bold"> Estado: <span data-target="show-address.state"></span> </br>

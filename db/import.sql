@@ -1,8 +1,9 @@
 
 CREATE TABLE addresses (
     id SERIAL PRIMARY KEY NOT NULL,
-    zip VARCHAR NOT NULL,
-    address VARCHAR NOT NULL,
+    zipcode VARCHAR NOT NULL,
+    street VARCHAR NOT NULL,
+    complement VARCHAR NOT NULL,
     district VARCHAR NOT NULL,
     city VARCHAR NOT NULL,
     state VARCHAR,

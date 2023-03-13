@@ -2,13 +2,23 @@ class Citizen < ApplicationRecord
 
   has_one :address
   has_one_attached :picture
+  accepts_nested_attributes_for :address
 
-  # validates :birthday,
-  #           format: { with: /\A\d{4}-\d{2}-\d{2}\z/, message: "This format is required dd/mm/YYY" }
+  after_create :send_welcome
 
+  validates :full_name, presence: true
+  validates :phone, presence: true
+  validates :cpf, presence: true,
+            uniqueness: true,
+            format: { with: /\A\d{3}\.\d{3}\.\d{3}-\d{2}\z/,
+                      message: "O campo CPF é inválido!" }
+  validates :date_of_birth,
+            presence: true,
+            format: { with: /\A\d{4}-\d{2}-\d{2}\z/,
+                      message: "Data de nascimento está com o formato inválido" }
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  scope :status, -> {where(status: true)}
-
+  scope :status, -> { where(status: true) }
 
   def self.show_age(date_of_birthday, date_today)
     dob = date_of_birthday
@@ -18,6 +28,10 @@ class Citizen < ApplicationRecord
     age
   end
 
+  private
 
+  def send_welcome
+    CitizenMailer.welcome_email(self).deliver_later
+  end
 
 end

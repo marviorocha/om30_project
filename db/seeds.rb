@@ -35,9 +35,10 @@ end
 
 10.times do |index|
   Address.create(
-    zip: Faker::Address.zip_code,
-    address: Faker::Address.street_address,
+    zipcode: Faker::Address.zip_code,
+    street: Faker::Address.street_address,
     district: Faker::Address.community,
+    complement: Faker::Address.secondary_address,
     city: Faker::Address.city,
     state: Faker::Address.state,
     ibge_code: Faker::Number.number(digits: 6),

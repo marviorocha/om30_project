@@ -1,67 +1,149 @@
-<diV  class="form-control w-full max-w-xs py-16">
+<%= form_with model: @citizen,
+              local: true,
+              id: 'add_citizen',
+              html: { data: { controller: 'mask' } } do |f| %>
 
-  <%= form_with model: citizen,
-                locals: true,
-                id: 'add_citizen',
-                html: { data: { controller: 'mask' } } do |f| %>
+  <div class="flex flex-row">
+    <div class="flex-1">
+      <h1 class="text-3xl">Cadastro de munícipe </h1>
+
+      <div class="flex  form-control w-full max-w-xs  w-full">
 
 
-    <div class="py-2">
-      <%= f.label :full_name, 'Nome completo:' %>
-      <%= f.text_field :full_name,
-                       placeholder: 'Nome completo',
-                       required: true,
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :full_name, 'Nome completo:' %>
+          <%= f.text_field :full_name,
+                           placeholder: 'Nome completo',
+                           required: true,
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.label :email, 'E-mail:' %>
-      <%= f.text_field :email, placeholder: 'Digite seu e-mail',
-                       required: true,
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :email, 'E-mail:' %>
+          <%= f.text_field :email, placeholder: 'Digite seu e-mail',
+                           required: true,
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.label :cpf, 'CPF:' %>
-      <%= f.text_field :cpf,
-                       required: true,
-                       placeholder: 'Digite seu CPF',
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :cpf, 'CPF:' %>
+          <%= f.text_field :cpf,
+                           required: true,
+                           placeholder: 'Digite seu CPF',
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.label :cns, 'Número do CNS:' %>
-      <%= f.text_field :cns,
-                       placeholder: 'Número do CNS',
-                       required: true,
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :cns, 'Número do CNS:' %>
+          <%= f.text_field :cns,
+                           placeholder: 'Número do CNS',
+                           required: true,
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.label :date_of_birth, 'Data de nascimento:' %>
-      <%= f.text_field :date_of_birth,
-                       placeholder: 'Ex.: dia/mês/ano',
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :date_of_birth, 'Data de nascimento:' %>
+          <%= f.text_field :date_of_birth,
+                           placeholder: 'Ex.: dia/mês/ano',
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.label :phone, 'Telefone com DDD:' %>
-      <%= f.text_field :phone,
-                       placeholder: '(00) 00000 00000',
-                       required: true,
-                       class: 'input input-bordered w-full max-w-xs' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :phone, 'Telefone com DDD:' %>
+          <%= f.text_field :phone,
+                           placeholder: '(00) 00000 00000',
+                           required: true,
+                           class: 'input input-bordered w-full max-w-xs' %>
+        </div>
 
-    <div class="py-2">
-      <%= f.select(:status, [['ATIVO', 1], ['INATIVO', 2],], {},
-                   { class: "select select-info w-full max-w-xs" }) %>
-    </div>
-    <div class="py-2">
-      <%= f.file_field :picture %>
-    </div>
-    <div class="py-2">
-      <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
-    </div>
+        <div class="py-2">
+          <%= f.label :status, 'Status:' %>
+          <%= f.select(:status, [['ATIVO', 1], ['INATIVO', 2],], {},
+                       { class: "select select-info w-full max-w-xs" }) %>
+        </div>
 
-  <% end %>
+        <div class="py-2">
+          <%= f.label :picture, 'Foto:' %>
+          <%= f.file_field :picture,
+                           class: 'file-input file-input-bordered file-input-primary w-full max-w-xs' %>
+        </div>
 
+        <div class="py-6">
+          <hr>
+        </div>
+        <%= f.fields_for :address do |f| %>
+          <h1 class="text-3xl">Endereço </h1>
+
+
+          <div class="py-2">
+            <%= f.label :zipcode, 'CEP:' %>
+            <%= f.text_field :zipcode,
+                             placeholder: 'CEP',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+          <div class="py-2">
+            <%= f.label :street, 'Endereço:' %>
+            <%= f.text_field :street,
+                             placeholder: 'Endereço',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+          <div class="py-2">
+            <%= f.label :complement, 'Complemento:' %>
+            <%= f.text_field :complement,
+                             placeholder: 'Endereço',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+
+          <div class="py-2">
+            <%= f.label :district, 'Bairro:' %>
+            <%= f.text_field :district,
+                             placeholder: 'Bairro',
+                             required: false,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+
+          <div class="py-2">
+            <%= f.label :city, 'Cidade:' %>
+            <%= f.text_field :city,
+                             placeholder: 'Cidade',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+
+          <div class="py-2">
+            <%= f.label :state, 'Estado:' %>
+            <%= f.text_field :state,
+                             placeholder: 'Estado',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+          <div class="py-2">
+            <%= f.label :ibge_code, 'código IBGE:' %>
+            <%= f.text_field :ibge_code,
+                             placeholder: 'código do IBGE',
+                             required: true,
+                             class: 'input input-bordered w-full max-w-xs' %>
+          </div>
+
+        <% end %>
+
+        <div class="py-2">
+          <%= f.submit 'Cadastrar', class: 'btn btn-primary' %>
+        </div>
+
+<% end %>
+
+</div>
+
+
+
+</div>
