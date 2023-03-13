@@ -9,6 +9,7 @@
         <figure>
           <% if citizen.picture.attached? %>
             <%= image_tag citizen.picture %>
+ 
           <% else %>
             <%= image_tag 'no-picture.svg' %>
           <% end %>

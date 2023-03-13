@@ -9,15 +9,13 @@ RSpec.describe Citizen, type: :model do
       it { should validate_presence_of(:cpf) }
       it { should validate_presence_of(:date_of_birth) }
       it { should validate_presence_of(:phone) }
+
     end
 
     it "is invalid if birthdate is in the future" do
-
       citizen = Citizen.new(full_name: "Marvio", date_of_birth: Date.tomorrow)
       expect(citizen).not_to be_valid
     end
-
- 
 
     it "is invalid if name is blank" do
       citizen = Citizen.new(full_name: "", date_of_birth: Date.today - 30.years)

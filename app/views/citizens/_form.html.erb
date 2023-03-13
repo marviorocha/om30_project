@@ -1,35 +1,42 @@
+
 <%= form_with model: @citizen,
               local: true,
               id: 'add_citizen',
               html: { data: { controller: 'mask' } } do |f| %>
 
+  <% if @error_message.present? %>
+    <div class="alert alert-danger"><%= @error_message %></div>
+  <% end %>
+
+
   <div class="flex flex-row">
-    <div class="flex-1">
+    <div class="flex-1 basic-1/4">
       <h1 class="text-3xl">Cadastro de munícipe </h1>
 
-      <div class="flex  form-control w-full max-w-xs  w-full">
 
+
+
+    <div class="flex  form-control w-full max-w-xs  w-full">
 
         <div class="py-2">
           <%= f.label :full_name, 'Nome completo:' %>
           <%= f.text_field :full_name,
                            placeholder: 'Nome completo',
-                           required: true,
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
           <%= f.label :email, 'E-mail:' %>
           <%= f.text_field :email, placeholder: 'Digite seu e-mail',
-                           required: true,
+
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
           <%= f.label :cpf, 'CPF:' %>
           <%= f.text_field :cpf,
-                           required: true,
                            placeholder: 'Digite seu CPF',
+                           required: true,
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
@@ -38,12 +45,14 @@
           <%= f.text_field :cns,
                            placeholder: 'Número do CNS',
                            required: true,
+                           maxlength:"15",
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
         <div class="py-2">
           <%= f.label :date_of_birth, 'Data de nascimento:' %>
           <%= f.text_field :date_of_birth,
+                           required: true,
                            placeholder: 'Ex.: dia/mês/ano',
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
@@ -52,7 +61,7 @@
           <%= f.label :phone, 'Telefone com DDD:' %>
           <%= f.text_field :phone,
                            placeholder: '(00) 00000 00000',
-                           required: true,
+
                            class: 'input input-bordered w-full max-w-xs' %>
         </div>
 
@@ -71,6 +80,7 @@
         <div class="py-6">
           <hr>
         </div>
+
         <%= f.fields_for :address do |f| %>
           <h1 class="text-3xl">Endereço </h1>
 
@@ -78,8 +88,9 @@
           <div class="py-2">
             <%= f.label :zipcode, 'CEP:' %>
             <%= f.text_field :zipcode,
-                             placeholder: 'CEP',
                              required: true,
+                             placeholder: 'CEP',
+
                              class: 'input input-bordered w-full max-w-xs' %>
           </div>
 
@@ -94,7 +105,7 @@
           <div class="py-2">
             <%= f.label :complement, 'Complemento:' %>
             <%= f.text_field :complement,
-                             placeholder: 'Endereço',
+                             placeholder: 'Complemento',
                              required: true,
                              class: 'input input-bordered w-full max-w-xs' %>
           </div>
@@ -104,7 +115,7 @@
             <%= f.label :district, 'Bairro:' %>
             <%= f.text_field :district,
                              placeholder: 'Bairro',
-                             required: false,
+                             required: true,
                              class: 'input input-bordered w-full max-w-xs' %>
           </div>
 
@@ -130,7 +141,7 @@
             <%= f.label :ibge_code, 'código IBGE:' %>
             <%= f.text_field :ibge_code,
                              placeholder: 'código do IBGE',
-                             required: true,
+
                              class: 'input input-bordered w-full max-w-xs' %>
           </div>
 

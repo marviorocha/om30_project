@@ -23,21 +23,10 @@ class CitizensController < ApplicationController
   end
 
   def create
+    citizen = CitizenCreator.call(citizen_params)
 
-    @citizen = Citizen.new(citizen_params)
-
-    if @citizen.save
-
-      respond_to do |format|
-
-        format.html { redirect_to '/', notice: "Cidadão foi criado com sucesso!" }
-
-      end
-
-    else
-
-      format.html { render :new, status: :unprocessable_entity }
-      raise StandardError.new("Error #{citizen.errors.full_messages.join(', ')}")
+    if citizen.save
+    redirect_to citizens_path, notice: 'Cadastrado com sucesso!'
     end
 
   end

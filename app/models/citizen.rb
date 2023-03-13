@@ -19,7 +19,7 @@ class Citizen < ApplicationRecord
   validates :date_of_birth,
             presence: true,
             format: { with: /\A\d{4}-\d{2}-\d{2}\z/,
-                      message: "Data de nascimento está com o formato inválido" }
+                      message: "O campo data de nascimento é inválido" }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   scope :status, -> { where(status: true) }
@@ -35,7 +35,7 @@ class Citizen < ApplicationRecord
   private
 
   def send_welcome
-    CitizenMailer.welcome_email(self).deliver_later
+    CitizenMailer.welcome_email(self).deliver_now
   end
 
 end

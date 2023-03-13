@@ -1,1 +1,6 @@
-<%= render 'form', citizen: [@citizen] %>
+<% content_for :title do %>
+  Cadastro de munícipe - AO30
+<% end %>
+
+
+<%= render 'form', citizen: @citizen %>
