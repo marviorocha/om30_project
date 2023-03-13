@@ -33,7 +33,9 @@ But is easy testing it app in localhost here step:
 
  1. Install **ruby on version 3.0.1** and docker with docker-composer
  2. Clone this repo with: ```git clone https://github.com/marviorocha/om30_project.git```
- 3. And last step ```docker-compose up -d```
+ 3. Create a file inside '''/config/application.yml''' See the ENV following the docker postgres... 
+ 4. And now go to folder CD OM30  ```docker-compose up -d```
+ 5. Run bundle install and go: ```localhost:3000``` 
 
 
 
