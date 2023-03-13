@@ -9,7 +9,7 @@ gem "figaro", "1.2"
 gem "faker", "3.1"
 
 gem "importmap-rails"
-
+gem "image_processing"
 
 gem "jbuilder", '2.11.5'
 

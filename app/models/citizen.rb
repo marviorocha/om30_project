@@ -1,7 +1,11 @@
 class Citizen < ApplicationRecord
 
   has_one :address
-  has_one_attached :picture
+  has_one_attached :picture do |size|
+    size.variant :thumb, resize: "120x120"
+    size.variant :medium, resize: "600x600"
+  end
+
   accepts_nested_attributes_for :address
 
   after_create :send_welcome
