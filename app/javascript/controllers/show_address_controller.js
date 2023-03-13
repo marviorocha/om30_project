@@ -3,13 +3,7 @@ import {Controller} from "@hotwired/stimulus"
 // Connects to data-controller="show-address"
 export default class extends Controller {
 
-    static targets = ['zipcode', 'street','complement', 'district', 'city', 'state', 'ibge_code']
-
-    connect() {
-
-
-
-    }
+    static targets = ['zipcode', 'street', 'complement', 'district', 'city', 'state', 'ibge_code']
 
     async addressData(event) {
 
@@ -29,6 +23,3 @@ export default class extends Controller {
 
     }
 }
-
-
-

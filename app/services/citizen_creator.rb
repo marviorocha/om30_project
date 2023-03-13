@@ -1,7 +1,7 @@
 class CitizenCreator
 
   def self.call(citizen_params)
-    citizen =  Citizen.new(citizen_params)
+    citizen = Citizen.new(citizen_params)
 
     if citizen.save
       return citizen
@@ -23,7 +23,5 @@ class CitizenCreator
       body: message
     )
   end
-
-
 
 end

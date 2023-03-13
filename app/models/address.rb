@@ -9,5 +9,4 @@ class Address < ApplicationRecord
   validates :city, presence: true
   validates :state, presence: true
 
-
 end
