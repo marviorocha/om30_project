@@ -6,6 +6,10 @@
 Hello, welcome my github! My name is Marvio, I love code develop and this is a 
 challenge for a offer in company **OM30** Where put all details for this project in below:
 
+## Screenshot
+![screenshot](https://user-images.githubusercontent.com/1095267/224639071-545776fc-e2bd-472f-9716-0d24efdd2cc1.png)
+ 
+
 ## Requiriments
 
  - Ruby 3.0.1
