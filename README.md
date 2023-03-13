@@ -39,5 +39,4 @@ But is easy testing it app in localhost here step:
 
 ## Enjoin the project
 
-I hope you enjoy my code writed in Ruby on Rails! This was fun! Thank you so much! 
-I wait your advance feedback: ([marviorocha@marviorocha.com](mailto:marviorocha@marviorocha.com))
+I hope you enjoy my code written in Ruby on Rails! This was fun! Thank you so much! I wait for your advance feedback.
