@@ -6,7 +6,7 @@ class CitizenCreator
     @params =  citizen_params
   end
 
-  def self.call(@params)
+  def self.call
 
   end
 
